@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flick Pics</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: rgb(77,0,255);
+    background: linear-gradient(0deg, rgba(77,0,255,1) 0%, rgba(255,0,210,1) 100%);
+    text-align: center;
+    }
+
+    #quiz-container {
+      max-width: 700px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 90px;
+      border-radius: 100px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      color: #333;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      align-items: left;
+    }
+
+    .option {
+      margin: 10px;
+    }
+
+    button {
+      background-color: #bf00ff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="quiz-container">
+    <h1>Flick Picks Romance Movies</h1>
+
+    <h2 id="question1">Which region do you want to explore?</h2>
+    <div class="options" id="options1">
+      <div class="option"><input type="radio" name="q1" value="bollywood"> Bollywood</div>
+      <div class="option"><input type="radio" name="q1" value="hollywood"> Hollywood</div>
+      <div class="option"><input type="radio" name="q1" value="southindian"> South Indian</div>
+    </div>
+
+    <h2 id="question2">From which year do you prefer to watch?</h2>
+    <div class="options" id="options2">
+      <div class="option"><input type="radio" name="q2" value="2000s"> 2000s</div>
+      <div class="option"><input type="radio" name="q2" value="2010s"> 2010s</div>
+      <div class="option"><input type="radio" name="q2" value="2020s"> 2020s</div>
+    </div>
+
+    <br><br>
+
+    <button onclick="checkAnswers()">Submit</button>
+  </div>
+
+  <script>
+    function checkAnswers() {
+      var answer1 = document.querySelector('input[name="q1"]:checked');
+      var answer2 = document.querySelector('input[name="q2"]:checked');
+  
+      if (answer1 && answer2) {
+        var baseUrl = 'https://www.imdb.com/search/title/?title_type=feature&genres=romance&sort=num_votes,desc';
+        var languageParam = '';
+  
+        switch (answer1.value) {
+          case 'bollywood':
+            languageParam = '&countries=IN&languages=hi';
+            break;
+          case 'hollywood':
+            languageParam = '&countries=US,GB';
+            break;
+          case 'southindian':
+            languageParam = '&countries=IN&languages=ta,te';
+            break;
+          default:
+            break;
+        }
+  
+        var releaseDateParam = '';
+        switch (answer2.value) {
+          case '2000s':
+            releaseDateParam = '&release_date=2000-01-01,2009-12-31';
+            break;
+          case '2010s':
+            releaseDateParam = '&release_date=2010-01-01,2019-12-31';
+            break;
+          case '2020s':
+            releaseDateParam = '&release_date=2020-01-01,2023-12-31';
+            break;
+          default:
+            break;
+        }
+  
+        var finalUrl = baseUrl + releaseDateParam + languageParam;
+        window.location.href = finalUrl;
+      } else {
+        alert('Please answer all questions.');
+      }
+    }
+  </script>
+
+</body>
+</html>
